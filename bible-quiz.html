@@ -3,278 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مسابقة الكتاب المقدس</title>
+<title>مسابقة أبو سيفين</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-
-    * { box-sizing: border-box; margin:0; padding:0; }
-
   body {
     background: #000;
     color: #fff;
-    font-family: 'Cairo', Tahoma, sans-serif;
-    min-height: 100vh;
-    padding: 20px;
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    text-align: center;
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(255, 68, 68, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(255, 68, 68, 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 30% 30%, rgba(255, 68, 68, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(255, 68, 68, 0.1) 0%, transparent 50%);
   }
-
-.container { max-width: 750px; margin: 0 auto; }
-
-.card {
-    background: rgba(15, 15, 15, 0.85);
+.box {
+    background: rgba(20, 20, 20, 0.9);
     border: 1px solid #ff4444;
-    border-radius: 15px;
-    padding: 28px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  h2 {
+    color: #ff4444;
     margin-bottom: 20px;
-    box-shadow: 0 0 25px rgba(255, 68, 68, 0.4), inset 0 0 15px rgba(255, 68, 68, 0.1);
-    backdrop-filter: blur(12px);
+    line-height: 1.6;
   }
-
-  h1 {
-    color: #ff4444;
+.power {
+    background: linear-gradient(135deg, #ff4444, #b71c1c);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
     text-align: center;
-    margin: 0 0 15px 0;
     font-weight: 900;
-    font-size: 30px;
-    text-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444, 0 0 35px #ff4444;
-    letter-spacing: 2px;
-    animation: glow 2s ease-in-out infinite;
+    margin-bottom: 15px;
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
   }
-
-  @keyframes glow {
-    0%, 100% { text-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444, 0 0 35px #ff4444; }
-    50% { text-shadow: 0 0 20px #ff4444, 0 0 35px #ff4444, 0 0 50px #ff4444; }
-  }
-
-.score {
-    text-align: center;
-    font-size: 24px;
+  #timer {
+    font-size: 32px;
     color: #ff4444;
+    font-weight: 900;
+    text-align: center;
     margin: 15px 0;
-    font-weight: 900;
+    display: none;
     text-shadow: 0 0 15px #ff4444;
   }
-
-.question {
-    font-size: 21px;
-    margin-bottom: 22px;
-    line-height: 1.8;
-    font-weight: 700;
-    color: #fff;
+  #timer.warning {
+    color: #ffeb3b;
+    text-shadow: 0 0 20px #ffeb3b;
+    animation: blink 0.5s infinite;
   }
-
-.option {
-    background: rgba(35, 35, 35, 0.7);
-    border: 1px solid #555;
-    padding: 16px;
-    margin: 12px 0;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: right;
-    font-size: 17px;
+  @keyframes blink {
+    50% { opacity: 0.5; }
   }
-
-.option:hover {
-    background: rgba(60, 60, 60, 0.9);
-    border-color: #ff4444;
-    box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
-    transform: translateX(-6px);
-  }
-
-.option.correct {
-    background: rgba(0, 100, 50, 0.8);
-    border-color: #00ff88;
-    box-shadow: 0 0 25px rgba(0, 255, 136, 0.7);
-  }
-
-.option.wrong {
-    background: rgba(100, 20, 20, 0.8);
-    border-color: #ff4444;
-    box-shadow: 0 0 25px rgba(255, 68, 68, 0.7);
-  }
-
-.explanation {
-    background: rgba(25, 25, 25, 0.95);
-    padding: 20px;
-    margin-top: 18px;
-    border-radius: 10px;
-    border-right: 4px solid #ff4444;
-    display: none;
-    font-size: 16px;
-    line-height: 1.8;
-    box-shadow: 0 0 20px rgba(255, 68, 68, 0.25);
-  }
-
-.explanation b {
-    color: #ff4444;
-    text-shadow: 0 0 8px #ff4444;
-  }
-
   button {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    border: 1px solid #ff4444;
+    border-radius: 12px;
+    background: rgba(255, 68, 68, 0.1);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Cairo', sans-serif;
+  }
+  button:hover:not(:disabled) {
+    background: rgba(255, 68, 68, 0.3);
+    transform: translateX(-5px);
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  #exp {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+    line-height: 1.8;
+  }
+.correct {
+    background: rgba(46, 213, 115, 0.2);
+    border: 1px solid #2ed573;
+    color: #2ed573;
+  }
+.wrong {
+    background: rgba(255, 71, 87, 0.2);
+    border: 1px solid #ff4757;
+    color: #ff4757;
+  }
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #ccc;
+    font-size: 16px;
+  }
+  #nextBtn {
     background: linear-gradient(135deg, #ff4444, #b71c1c);
     color: white;
     border: none;
-    padding: 16px 30px;
-    border-radius: 10px;
-    font-size: 19px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-    font-weight: 900;
-    font-family: 'Cairo', sans-serif;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 25px rgba(255, 68, 68, 0.6);
-  }
-
-  button:hover:not(:disabled) {
-    transform: scale(1.03);
-    box-shadow: 0 0 35px rgba(255, 68, 68, 0.9);
-  }
-
-  button:disabled {
-    background: #333;
-    cursor: not-allowed;
-    opacity: 0.4;
-  }
-
-.loading {
-    text-align: center;
-    color: #ff4444;
-    font-size: 19px;
-    text-shadow: 0 0 12px #ff4444;
-  }
-
-.result-title {
-    font-size: 36px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 25px #ff4444;
-  }
-
-.final-score {
-    font-size: 42px;
-    color: #ff4444;
-    font-weight: 900;
-    text-shadow: 0 0 25px #ff4444, 0 0 45px #ff4444;
-  }
-
- .back-link {
-    display: inline-block;
-    color: #ff4444;
-    text-decoration: none;
-    margin-bottom: 15px;
+    display: none;
     font-weight: 700;
   }
-
- .back-link:hover {
-    text-shadow: 0 0 10px #ff4444;
+  #result {
+    text-align: center;
+    display: none;
+  }
+  #result h1 {
+    color: #ff4444;
+    text-shadow: 0 0 15px #ff4444;
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <a href="index.html" class="back-link">← رجوع للرئيسية</a>
 
-  <div class="card">
-    <h1>⚡ مسابقة الكتاب المقدس ⚡</h1>
-    <div id="score" class="score">الدرجة: 0/0</div>
+<div class="box">
+  <div id="quiz">
+    <div class="info">
+      <span>السؤال <span id="num">1</span>/20</span>
+      <span>النتيجة: <span id="score">0</span></span>
+    </div>
+
+    <div id="powerTitle"></div>
+    <div id="timer">⏱️ 30 ثانية</div>
+    <h2 id="q"></h2>
+    <div id="opts"></div>
+    <div id="exp"></div>
+    <button id="nextBtn" onclick="nextQ()">السؤال التالي ➡️</button>
   </div>
 
-  <div id="quizContainer">
-    <div class="card"><p class="loading">جاري تحميل الأسئلة...</p></div>
-  </div>
-
-  <div class="card">
-    <button id="nextBtn" onclick="nextQuestion()" disabled>السؤال التالي</button>
+  <div id="result">
+    <h1>خلصت! 🎉</h1>
+    <h2>نتيجتك: <span id="finalScore"></span>/20</h2>
+    <p id="msg"></p>
+    <button onclick="restart()">إعادة 🔄</button>
   </div>
 </div>
 
 <script>
-const QUIZ_URL = "https://raw.githubusercontent.com/anwrwjyh759-del/Asela-kanasia/main/quiz.json";
-let questions = [], currentQ = 0, score = 0, answered = false;
+let data = [];
+let i = 0;
+let score = 0;
+let timer;
+let answered = false;
 
-async function loadQuiz() {
-  try {
-    const res = await fetch(QUIZ_URL + "?t=" + Date.now());
-    questions = await res.json();
-    showQuestion();
-  } catch(e) {
-    document.getElementById("quizContainer").innerHTML =
-      "<div class='card'><p class='loading'>فشل تحميل الأسئلة. تأكد إن quiz.json موجود</p></div>";
-  }
-}
+// يجيب الأسئلة من quiz.json
+fetch('quiz.json')
+.then(res => res.json())
+.then(json => {
+  data = json;
+  showQ();
+});
 
-function showQuestion() {
+function showQ() {
+  clearInterval(timer);
   answered = false;
-  const q = questions[currentQ];
-  document.getElementById("nextBtn").disabled = true;
+  document.getElementById("exp").style.display = "none";
+  document.getElementById("nextBtn").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+  document.getElementById("timer").classList.remove("warning");
+  document.getElementById("num").innerText = i + 1;
+  document.getElementById("score").innerText = score;
+  document.getElementById("q").innerText = data[i].question;
+  document.getElementById("powerTitle").innerHTML = "";
 
-  let html = `<div class="card"><div class="question">${currentQ+1}. ${q.question}</div><div id="options">`;
-  q.options.forEach((opt, i) => {
-    html += `<div class="option" onclick="selectAnswer(${i})">${opt}</div>`;
-  });
-  html += `</div><div class="explanation" id="explanation">
-    <b>الإجابة الصحيحة:</b> ${q.options[q.answer]}<br><br>
-    <b>الشرح:</b> ${q.explanation}</div></div>`;
-
-  document.getElementById("quizContainer").innerHTML = html;
-  updateScore();
-}
-
-function selectAnswer(i) {
-  if (answered) return;
-  answered = true;
-  const q = questions[currentQ];
-  const options = document.querySelectorAll(".option");
-
-  options.forEach((opt, idx) => {
-    opt.style.pointerEvents = "none";
-    if (idx === q.answer) opt.classList.add("correct");
-    if (idx === i && i!== q.answer) opt.classList.add("wrong");
-  });
-
-  if (i === q.answer) score++;
-  document.getElementById("explanation").style.display = "block";
-  document.getElementById("nextBtn").disabled = false;
-  updateScore();
-}
-
-function nextQuestion() {
-  currentQ++;
-  if (currentQ >= questions.length) {
-    document.getElementById("quizContainer").innerHTML = `
-      <div class="card" style="text-align:center;">
-        <h2 class="result-title">خلصت! 🎯</h2>
-        <p class="final-score">${score}/${questions.length}</p>
-        <p style="font-size:19px; margin:20px 0;">${getResultMessage()}</p>
-        <button onclick="restartQuiz()">إعادة المسابقة</button>
-      </div>`;
-    document.getElementById("nextBtn").style.display = "none";
-    return;
+  // المؤقت يشتغل بس على السؤال 20
+  if(i == 19) {
+    document.getElementById("powerTitle").innerHTML = '<div class="power">⚡ السؤال الطاقة - 30 ثانية فقط ⚡</div>';
+    document.getElementById("timer").style.display = "block";
+    let sec = 30;
+    document.getElementById("timer").innerText = "⏱️ " + sec + " ثانية";
+    timer = setInterval(() => {
+      sec--;
+      document.getElementById("timer").innerText = "⏱️ " + sec + " ثانية";
+      if(sec <= 10) {
+        document.getElementById("timer").classList.add("warning");
+      }
+      if(sec < 0) {
+        clearInterval(timer);
+        if(!answered) check(-1);
+      }
+    }, 1000);
   }
-  showQuestion();
+
+  let opts = "";
+  data[i].options.forEach((opt, idx) => {
+    opts += `<button onclick="check(${idx})">${opt}</button>`;
+  });
+  document.getElementById("opts").innerHTML = opts;
 }
 
-function restartQuiz() {
-  currentQ = 0; score = 0;
+function check(idx) {
+  if(answered) return;
+  answered = true;
+  clearInterval(timer);
+
+  let buttons = document.querySelectorAll("#opts button");
+  buttons.forEach(btn => btn.disabled = true);
+
+  let exp = document.getElementById("exp");
+  exp.style.display = "block";
+
+  if(idx == data[i].answer) {
+    score++;
+    exp.className = "correct";
+    exp.innerText = "صح ✅\n" + data[i].explanation;
+  } else if(idx == -1) {
+    exp.className = "wrong";
+    exp.innerText = "انتهى الوقت! ❌\n" + data[i].explanation;
+  } else {
+    exp.className = "wrong";
+    exp.innerText = "غلط ❌\nالإجابة الصح: " + data[i].options[data[i].answer] + "\n" + data[i].explanation;
+  }
+
+  buttons[data[i].answer].style.background = "rgba(46, 213, 115, 0.4)";
+
   document.getElementById("nextBtn").style.display = "block";
-  showQuestion();
 }
 
-function updateScore() {
-  document.getElementById("score").innerText = `الدرجة: ${score}/${questions.length}`;
+function nextQ() {
+  i++;
+  if(i < data.length) {
+    showQ();
+  } else {
+    showResult();
+  }
 }
 
-function getResultMessage() {
-  const percent = (score/questions.length)*100;
-  if (percent >= 80) return "ممتاز! دي درجة ناس بتقرأ كتير 🙏";
-  if (percent >= 50) return "كويس، بس لسه في أسئلة تقيلة مستنياك";
-  return "محتاج تقرأ أكتر، الكتاب المقدس كنز";
+function showResult() {
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("finalScore").innerText = score;
+
+  let msg = "";
+  if(score >= 18) msg = "ممتاز! أنت وحش كتاب مقدس 🔥";
+  else if(score >= 14) msg = "كويس جداً! معلوماتك قوية 💪";
+  else if(score >= 10) msg = "مستوى متوسط، شد حيلك شوية 📚";
+  else msg = "محتاج تقرأ أكتر، بس عاش إنك كملت ❤️";
+
+  document.getElementById("msg").innerText = msg;
 }
 
-loadQuiz();
+function restart() {
+  i = 0;
+  score = 0;
+  document.getElementById("quiz").style.display = "block";
+  document.getElementById("result").style.display = "none";
+  showQ();
+}
 </script>
 </body>
 </html>
