@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كنيسه الشهيد العظيم ابو سيفين </title>
+<title>كنيسه الشهيد العظيم ابو سيفين</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
 
@@ -77,11 +77,35 @@
     margin-top: 15px;
     box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
     transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-family: 'Cairo', sans-serif;
   }
 
- .btn:hover {
+ .btn:hover:not(:disabled) {
     transform: scale(1.05);
     box-shadow: 0 0 35px rgba(255, 68, 68, 0.8);
+  }
+ .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+#timer {
+    font-size: 28px;
+    color: #ff4444;
+    font-weight: 900;
+    margin: 20px 0;
+    display: none;
+    text-shadow: 0 0 10px #ff4444;
+  }
+#timer.warning {
+    color: #ffeb3b;
+    text-shadow: 0 0 15px #ffeb3b;
+    animation: blink 0.5s infinite;
+  }
+@keyframes blink {
+    50% { opacity: 0.5; }
   }
 </style>
 </head>
@@ -92,7 +116,9 @@
   <div class="card">
     <h2>📖 مسابقة الكتاب المقدس</h2>
     <p>اختبر معلوماتك في الكتاب المقدس بأسئلة قوية وتعلم مع كل إجابة</p>
-    <a href="bible-quiz.html" class="btn">ابدأ المسابقة</a>
+    
+    <div id="timer">⏱️ 30 ثانية</div>
+    <button id="startBtn" class="btn" onclick="startQuiz()">ابدأ المسابقة</button>
   </div>
 
   <div class="card">
@@ -107,5 +133,42 @@
     <a href="#" class="btn">اطلب صلاة</a>
   </div>
 </div>
+
+<script>
+let countdown;
+let timeLeft = 30;
+
+function startQuiz() {
+  const btn = document.getElementById('startBtn');
+  const timerDiv = document.getElementById('timer');
+  
+  btn.disabled = true;
+  timerDiv.style.display = 'block';
+  timeLeft = 30;
+  
+  countdown = setInterval(() => {
+    timerDiv.innerText = '⏱️ ' + timeLeft + ' ثانية';
+    
+    if(timeLeft <= 10) {
+      timerDiv.classList.add('warning');
+    }
+    
+    timeLeft--;
+    
+    if(timeLeft < 0) {
+      clearInterval(countdown);
+      timerDiv.innerText = '⏰ انتهى الوقت!';
+      timerDiv.classList.remove('warning');
+      btn.innerText = 'إعادة المحاولة';
+      btn.disabled = false;
+    }
+  }, 1000);
+  
+  // يفتح صفحة المسابقة بعد ثانية
+  setTimeout(() => {
+    window.location.href = 'bible-quiz.html';
+  }, 1000);
+}
+</script>
 </body>
 </html>
